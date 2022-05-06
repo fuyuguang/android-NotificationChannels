@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -87,6 +88,20 @@ public class MainActivity extends Activity {
         if (nb != null) {
             noti.notify(id, nb);
         }
+    }
+
+
+    public void gotoNotificationSettings(String channel) {
+        Intent intent;
+        if (TextUtils.isEmpty(channel)){
+            intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+        }else{
+            intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, channel);
+        startActivity(intent);
     }
 
     /**
